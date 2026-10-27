@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <body bgcolor="#f0e68c">
+        <button onclick="rollPotato()">Roll</button>
+        <h1 id="rolledDisplay">...</h1>
+        <img id="potatoImg" src="Potato.png" width="200px" hidden>
+        <img id="peeledPotatoImg" src="PeeledPotato.png" width="200px" hidden>
+        <img id="bitterPotatoImg" src="BitterPotato.png" width="200px" hidden>
+        <img id="sweetPotatoImg" src="SweetPotato.png" width="200px" hidden>
+        <img id="yellowPotatoImg" src="YellowPotato.png" width="200px" hidden>
+        <img id="bronzePotatoImg" src="BronzePotato.png" width="200px" hidden>
+        <img id="chompedPotatoImg" src="ChompedPotato.png" width="200px" hidden>
+        <img id="organicPotatoImg" src="OrganicPotato.png" width="200px" hidden>
+        <img id="cyborgPotatoImg" src="CyborgPotato.png" width="200px" hidden>
+        <img id="goldenPotatoImg" src="GoldenPotato.png" width="200px" hidden>
+        <h3 id="rollAmountDisplay">0 rolls</h3>
+        <h1 id="moneyDisplay">£0</h1>
+        <hr>
+        <h2>Shop:</h2>
+        <button id="autoRollBuy" onclick="buy('AR')">Autoroll - £1,000</button>
+        <br>
+        <button id="increaseLuckBuy" onclick="buy('IL1')">Increase luck - £1,000</button>
+        <button id="increaseLuck2Buy" onclick="buy('IL2')" hidden>Increase luck 2 - £10,000</button>
+        <hr>
+        <h2>Craft:</h2>
+        <button onclick="craft('Chomped potato', 3, 'Yellow potato')">Chomped potato - 3 Yellow Potatos</button>
+        <button onclick="craft('Organic potato', 3, 'Bronze potato')">Organic potato - 3 Bronze Potatos</button>
+        <button onclick="craft('Golden potato', 12, 'Bronze potato')">Golden potato - 12 Bronze Potatos</button>
+        <hr>
+        <h2>Sell potatos:</h2>
+        <button onclick="sell('Potato', 1)">Potato - £1</button>
+        <button onclick="sell('Peeled potato', 2)">Peeled potato - £2</button>
+        <button onclick="sell('Bitter potato', 4)">Bitter potato - £4</button>
+        <button onclick="sell('Sweet potato', 8)">Sweet potato - £8</button>
+        <button onclick="sell('Yellow potato', 16)">Yellow potato - £16</button>
+        <button onclick="sell('Bronze potato', 32)">Bronze potato - £32</button>
+        <button onclick="sell('Chomped potato', 64)">Chomped potato - £64</button>
+        <button onclick="sell('Organic potato', 128)">Organic potato - £128</button>
+        <button onclick="sell('Cyborg potato', 256)">Cyborg potato - £256</button>
+        <button onclick="sell('Golden potato', 512)">Golden potato - £512</button>
+        <hr>
+        <h2>Inventory:</h2>
+        <button id="invHide" onclick="document.getElementById('inventoryDisplay').hidden = true">Hide</button>
+        <button id="invShow" onclick="document.getElementById('inventoryDisplay').hidden = false">Show</button>
+        <input id="searchBar" type="text" placeholder="Find out how many of..." onchange="find()">
+        <h2 id="inventoryDisplay">...</h2>
+        <script>
+            Music = new Audio ("backgroundMusic.mp3");
+            Music.loop = true;
+
+            let inventory = [];
+            let rolls = 0;
+            let money = 0;
+            let chances = ["Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Potato", "Peeled potato", "Peeled potato", "Peeled potato", "Peeled potato", "Peeled potato", "Peeled potato", "Peeled potato", "Peeled potato", "Bitter potato", "Bitter potato", "Bitter potato", "Bitter potato", "Sweet potato", "Sweet potato", "Yellow potato", "Yellow potato", "Next"]
+            let chances2 = ["Bronze potato", "Bronze potato", "Bronze potato", "Bronze potato", "Bronze potato", "Bronze potato", "Bronze potato", "Bronze potato","Bronze potato","Bronze potato","Bronze potato","Bronze potato","Bronze potato","Bronze potato","Bronze potato","Bronze potato", "Chomped potato", "Chomped potato", "Chomped potato", "Chomped potato", "Chomped potato", "Chomped potato", "Chomped potato", "Chomped potato", "Organic potato", "Organic potato", "Organic potato", "Organic potato", "Cyborg potato", "Cyborg potato", "Golden potato"]
+            
+            function rollPotato() {
+                Click = new Audio ("click.mp3").play();
+                document.getElementById("potatoImg").hidden = true;
+                document.getElementById("peeledPotatoImg").hidden = true;
+                document.getElementById("bitterPotatoImg").hidden = true;
+                document.getElementById("sweetPotatoImg").hidden = true;
+                document.getElementById("yellowPotatoImg").hidden = true;
+                document.getElementById("bronzePotatoImg").hidden = true;
+                document.getElementById("chompedPotatoImg").hidden = true;
+                document.getElementById("organicPotatoImg").hidden = true;
+                document.getElementById("cyborgPotatoImg").hidden = true;
+                document.getElementById("goldenPotatoImg").hidden = true;
+
+                let rand = Math.floor(Math.random()*chances.length);
+                if (chances[rand] === "Next") {
+                    rand = Math.floor(Math.random()*chances2.length);
+                    inventory.push(chances2[rand]);
+                    document.getElementById("rolledDisplay").textContent = chances2[rand];
+
+                    if (chances2[rand] === "Bronze potato") {
+                        document.getElementById("bronzePotatoImg").hidden = false;
+                    } else if (chances2[rand] === "Chomped potato") {
+                        document.getElementById("chompedPotatoImg").hidden = false;
+                    } else if (chances2[rand] === "Organic potato") {
+                        document.getElementById("organicPotatoImg").hidden = false;
+                    } else if (chances2[rand] === "Cyborg potato") {
+                        document.getElementById("cyborgPotatoImg").hidden = false;
+                    } else if (chances2[rand] === "Golden potato") {
+                        document.getElementById("goldenPotatoImg").hidden = false;
+                    }
+                } else {
+                    inventory.push(chances[rand]);
+                    document.getElementById("rolledDisplay").textContent = chances[rand];
+
+                    if (chances[rand] === "Potato") {
+                        document.getElementById("potatoImg").hidden = false;
+                    } else if (chances[rand] === "Peeled potato") {
+                        document.getElementById("peeledPotatoImg").hidden = false;
+                    } else if (chances[rand] === "Bitter potato") {
+                        document.getElementById("bitterPotatoImg").hidden = false;
+                    } else if (chances[rand] === "Sweet potato") {
+                        document.getElementById("sweetPotatoImg").hidden = false;
+                    } else if (chances[rand] === "Yellow potato") {
+                        document.getElementById("yellowPotatoImg").hidden = false;
+                    }
+                }
+                console.log(rand + chances[rand] + chances2[rand])
+                rolls++;
+                document.getElementById("rollAmountDisplay").textContent = rolls + " rolls";
+                document.getElementById("inventoryDisplay").innerHTML = inventory.join(", ");
+            }
+
+            function buy(item) {
+                if (item === "AR") {
+                    if (money > 999) {
+                        money-=1000;
+                        document.getElementById("autoRollBuy").hidden = true;
+                        document.getElementById("moneyDisplay").textContent = "£" + money;
+                    }
+                } else if (item === "IL1") {
+                    if (money > 999) {
+                        money-=1000;
+                        document.getElementById("increaseLuckBuy").hidden = true;
+                        document.getElementById("increaseLuck2Buy").hidden = false;
+                        document.getElementById("moneyDisplay").textContent = "£" + money;
+
+                        removeAll("Potato", chances);
+                    }
+                } else if (item === "IL2") {
+                    if (money > 9999) {
+                        money-=10000;
+                        document.getElementById("increaseLuck2Buy").hidden = true;
+                        document.getElementById("moneyDisplay").textContent = "£" + money;
+
+                        removeAll("Peeled potato", chances);
+                    }
+                }
+            }
+
+            function craft(item, cost, costItem) {
+                if (inventory.filter(item => item === costItem).length > cost-1) {
+                    let i = 0;
+                    for (let index = 0; index < inventory.length; index++) {
+                        const element = inventory[index];
+                        
+                        if (element === costItem) {
+                            inventory.splice(inventory.indexOf(element), 1)
+                            i++;
+                        }
+                        if (i === 3) {
+                            break
+                        }
+                    }
+                    Craft = new Audio ("Craft.mp3").play();
+                    inventory.push(item);
+                    document.getElementById("inventoryDisplay").innerHTML = inventory.join(", ");
+                    console.log("Crafted: " + item)
+                }
+            }
+
+            function find() {
+                const searchBar = document.getElementById("searchBar");
+                alert(inventory.filter(item => item === searchBar.value).length)
+                searchBar.value = "";
+            }
+
+            function sell(item, value) {
+                if (inventory.includes(item)) {
+                    Buy = new Audio ("Buy.mp3").play();
+                    inventory.splice(inventory.indexOf(item), 1);
+                    money+=value;
+                    document.getElementById("inventoryDisplay").innerHTML = inventory.join(", ");
+                    document.getElementById("moneyDisplay").textContent = "£" + money;
+                    console.log("Sold: " + item + ", for: " + value);
+                }
+            }
+
+            function removeAll(item, array) {
+                while (array.includes(item)) {
+                    array.splice(array.indexOf(item), 1);
+                }
+            }
+
+            setInterval(function() {
+                if (document.getElementById("autoRollBuy").hidden === true) {
+                    rollPotato();
+                }
+            }, 1000)
+
+            window.addEventListener("load", function() {
+                document.addEventListener("click", function() {
+                    Music.play();
+                })
+            })
+        </script>
+    </body>
+</html>
